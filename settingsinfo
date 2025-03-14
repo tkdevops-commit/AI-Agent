@@ -1,0 +1,29 @@
+Prompt engineering 
+
+Settings: Two important settings that determine the frequency of query and range of the search.
+
+1.	Temperature: Determines the most likely result. Lower = most likely, Higher = More randomness.
+
+Temperature	Example Prompt	Example AI Response	Best Use Cases
+0.0 (Very Low)	“Explain black holes.”	“A black hole is a region of space where gravity is so strong that nothing, not even light, can escape.”	Scientific papers, technical writing, legal documents
+0.5 (Balanced)	“Describe a sunset.”	“The sky turns shades of orange and pink as the sun dips below the horizon, casting a warm glow over the landscape.”	Business emails, general conversation, informative writing
+1.0 (High)	“Describe a sunset.”	“The sky explodes into a symphony of fiery oranges, deep purples, and soft pinks, painting a masterpiece of farewell to the day.”	Creative writing, storytelling, casual conversation
+1.5+ (Very High)	“Describe a sunset.”	“As the sun melts into the ocean, the sky blushes with wild streaks of crimson and violet, whispering goodnight to the stars.”	Poetry, brainstorming, generating unconventional ideas
+
+2.	Top -p: Filters the range, scope and depth of the query
+
+Top-p	Example Prompt	Example AI Response	Best Use Cases
+0.3 (Very Low)	“Tell me a joke.”	“Why did the chicken cross the road? To get to the other side.”	Serious discussions, strict tone, highly reliable outputs
+0.7 (Moderate)	“Tell me a joke.”	“Why did the scarecrow win an award? Because he was outstanding in his field!”	Balanced creativity and coherence (business + casual)
+0.9 (High)	“Tell me a joke.”	“Parallel lines have so much in common. It’s a shame they’ll never meet!”	Conversational AI, dynamic responses, humor, engagement
+1.0 (Very High)	“Tell me a joke.”	“A photon checks into a hotel. The bellhop asks if it needs help with luggage. The photon replies, ‘No thanks, I’m traveling light!’”	Maximizing variety, humor, playful chatbots
+
+
+Advanced prompt engineering techniques:
+
+Types:
+-	Few shots prompt
+-	CoT
+-	Self-consistency 
+-	Knowledge 
+-	ReAct
