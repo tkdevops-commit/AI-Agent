@@ -1,0 +1,23 @@
+This project will focus on building an AI agent using open source tools and freeteir services. 
+
+Main features:
+- Generates email from user input
+- Email analysis: Extract, summarise and action items
+- Format control: Set professional corporate professional tone
+
+Tech stack
+Fornt-end: HTML, tailwind, React, 
+Backend: Python, OpenAI GPT
+
+Database:
+SQlite
+
+Hosting:
+Guthub
+
+Development plan
+Phase one:
+UI
+AI Gen
+Analysis
+DL
