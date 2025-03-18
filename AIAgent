@@ -6,14 +6,14 @@ Main features:
 - Format control: Set professional corporate professional tone
 
 Tech stack
-Fornt-end: HTML, tailwind, React, 
+Front-end: HTML, tailwind, React, 
 Backend: Python, OpenAI GPT
 
 Database:
 SQlite
 
 Hosting:
-Guthub
+Github
 
 Development plan
 Phase one:
