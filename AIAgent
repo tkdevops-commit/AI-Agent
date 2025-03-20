@@ -6,7 +6,8 @@ Main features:
 - Format control: Set professional corporate professional tone
 
 Tech stack
-Front-end: HTML, tailwind, React, 
+Front-end: HTML, tailwind, React
+
 Backend: Python, OpenAI GPT
 
 Database:
