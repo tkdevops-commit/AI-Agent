@@ -1,55 +1,64 @@
-Script detects users language and translates queries to English:
-Features:
-Detects language used
-Translates non-english to English
-Refines structure 
-Forwards to ChatGPT
-
-Packages: 
-Textblob
-
-from langdetect import detect
+from langdetect import detect, DetectorFactory
 from textblob import TextBlob
 import openai
 
+# Ensure consistent language detection results
+DetectorFactory.seed = 0
+
 # OpenAI API Key (replace with your actual key)
 OPENAI_API_KEY = "your-api-key"
-
 openai.api_key = OPENAI_API_KEY
 
 def detect_and_refine_query(user_query, user_region="global"):
-    # Detect language
-    detected_lang = detect(user_query)
+    try:
+        # Detect language
+        detected_lang = detect(user_query)
+    except Exception as e:
+        print(f"Error detecting language: {e}")
+        detected_lang = "en"  # Default to English if detection fails
     
-    # If not English, translate to English
+    # Translate if not English
+    translated_query = user_query
     if detected_lang != "en":
-        translated_query = str(TextBlob(user_query).translate(to="en"))
-    else:
-        translated_query = user_query
+        try:
+            translated_query = str(TextBlob(user_query).translate(to="en"))
+        except Exception as e:
+            print(f"Translation error: {e}")
+            translated_query = user_query  # Fallback to original if translation fails
 
-    # Regional syntax adjustments (Example: Chinese vs. Australian English)
-    if user_region == "china":
-        refined_query = translated_query.replace("please", "").replace("can you", "would you mind")
-    elif user_region == "australia":
-        refined_query = translated_query.replace("hello", "G'day").replace("can you", "could you")
-    else:
-        refined_query = translated_query  # Default global English
+    # Regional syntax adjustments
+    regional_adjustments = {
+        "china": lambda text: text.replace("please", "").replace("can you", "would you mind"),
+        "australia": lambda text: text.replace("hello", "G'day").replace("can you", "could you"),
+        "uk": lambda text: text.replace("color", "colour").replace("can you", "could you please"),
+    }
+    
+    refined_query = regional_adjustments.get(user_region, lambda x: x)(translated_query)
 
-    return refined_query
+    return refined_query, detected_lang
 
-def ask_chatgpt(refined_query):
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[{"role": "user", "content": refined_query}]
-    )
-    return response["choices"][0]["message"]["content"]
+def ask_chatgpt(refined_query, user_language):
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"User's original language: {user_language}. Translate back if needed."},
+                {"role": "user", "content": refined_query}
+            ]
+        )
+        return response["choices"][0]["message"]["content"]
+    except Exception as e:
+        print(f"ChatGPT API error: {e}")
+        return "Error fetching response from ChatGPT."
 
 # Example usage
-user_query = "你好，你能帮我写一封正式的邮件吗？"  # Chinese user example
-user_region = "china"  # Can be "china", "australia", "global", etc.
+if __name__ == "__main__":
+    user_query = "你好，你能帮我写一封正式的邮件吗？"  # Chinese user example
+    user_region = "china"  # Can be "china", "australia", "uk", etc.
 
-refined_query = detect_and_refine_query(user_query, user_region)
-chatgpt_response = ask_chatgpt(refined_query)
+    refined_query, detected_lang = detect_and_refine_query(user_query, user_region)
+    chatgpt_response = ask_chatgpt(refined_query, detected_lang)
 
-print("Refined Query:", refined_query)
-print("ChatGPT Response:", chatgpt_response)
+    print("Detected Language:", detected_lang)
+    print("Refined Query:", refined_query)
+    print("ChatGPT Response:", chatgpt_response)
