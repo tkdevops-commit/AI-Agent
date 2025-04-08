@@ -1,9 +1,23 @@
 {
-  "model": ["gpt-4", "gpt-3.5-turbo", "claude-3", "gemini-pro", "mistral-7b"],
+  "model": [
+    "gpt-4",
+    "gpt-3.5-turbo",
+    "claude-3",
+    "gemini-pro",
+    "mistral-7b",
+    "llama-3-70b",
+    "command-r-plus",
+    "mixtral-8x7b",
+    "palm-2"
+  ],
   "prompt": "Generate a creative story about space exploration.",
   "temperature": 0.7,
   "top_p": 0.9,
-  "max_tokens": 200
+  "max_tokens": 200,
+  "frequency_penalty": 0.3,
+  "presence_penalty": 0.2,
+  "stop": ["###", "\n\nEnd of story."],
+  "user": "space-story-gen"
 }
 
 
