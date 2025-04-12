@@ -3,7 +3,7 @@ This project will focus on building an AI agent using open source tools and free
 Main features:
 - Generates email from user input
 - Email analysis: Extract, summarise and action items
-- Format control: Set professional corporate professional tone.
+- Format control: Set professional corporate professional tone
 
 Tech stack
 Front-end: HTML, tailwind, React
